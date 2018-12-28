@@ -13,8 +13,14 @@
     }
   ],
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "bugs": {
     "url": "https://github.com/CodelyTV/p2p-editor/issues"
   },
-  "homepage": "https://github.com/CodelyTV/p2p-editor#readme"
+  "homepage": "https://github.com/CodelyTV/p2p-editor#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
 }
