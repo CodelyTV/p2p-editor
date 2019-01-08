@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/CodelyTV/p2p-editor.svg?branch=master)](https://travis-ci.com/CodelyTV/p2p-editor)
+
 # P2P Editor
 
 P2P text/code editor.
