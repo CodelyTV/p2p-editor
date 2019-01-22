@@ -8,7 +8,7 @@ P2P text/code editor.
 
 TODO
 
-## Arquitecture
+## Architecture
 
 TODO
 
