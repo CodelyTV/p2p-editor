@@ -2,7 +2,7 @@
 
 # P2P Editor
 
-P2P text/code editor.
+P2P code editor for live coding sessions.
 
 ## Introduction
 
@@ -10,7 +10,7 @@ TODO
 
 ## Architecture
 
-TODO
+WebRTC
 
 ## Features
 

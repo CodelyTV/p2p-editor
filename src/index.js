@@ -1,20 +1,46 @@
-const hypercore = require('hypercore')
-const ram = require('random-access-memory')
+var hypercore = require('hypercore')
+var ram = require('random-access-memory')
+var webrtcSwarm = require('webrtc-swarm')
+var signalhub = require('signalhub')
 
-const feed = hypercore(function (filename) {
-  return ram()
+var key = window.location.toString().split('#')[1]
+
+var log = hypercore(ram, key)
+
+var div = document.createElement('div')
+var $ = document.querySelector.bind(document)
+
+div.innerHTML = `
+  <textarea></textarea>
+  <button>tweet</button>
+  <div id="timeline"></div>
+`
+
+document.body.appendChild(div)
+
+$('button').onclick = function () {
+  var val = $('textarea').value
+  log.append(val)
+}
+
+log.on('ready', function() {
+  console.log(log.key.toString('hex'))
+  var hub = signalhub(log.key.toString('hex'), [
+    'http://localhost:8080'
+  ])
+
+  var sw = webrtcSwarm(hub)
+
+  sw.on('peer', function(peer) {
+    console.log('new peer')
+    var stream = log.replicate({live: true, encrypt: false})
+    peer.pipe(stream).pipe(peer)
+  })
 })
 
-feed.on('ready', () => {
-    console.log(feed.key.toString('hex'))
-
-    feed.createReadStream({live: true}).on('data', (data) => {
-        console.log(data.toString())
-    })
-})
-
-var textarea = document.getElementById('textarea')
-
-textarea.addEventListener('keydown', (e) => {
-    feed.append(e.key)
-})
+log.createReadStream({live: true})
+  .on('data', function (data) {
+    var div = document.createElement('div')
+    div.innerHTML = data.toString()
+    $('#timeline').appendChild(div)
+  })
