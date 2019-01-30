@@ -7,21 +7,16 @@ var key = window.location.toString().split('#')[1]
 
 var log = hypercore(ram, key)
 
-var div = document.createElement('div')
-var $ = document.querySelector.bind(document)
-
-div.innerHTML = `
-  <textarea></textarea>
-  <button>tweet</button>
-  <div id="timeline"></div>
-`
-
-document.body.appendChild(div)
-
-$('button').onclick = function () {
-  var val = $('textarea').value
-  log.append(val)
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/monokai");
+editor.session.setMode("ace/mode/javascript");
+if (key != null) {
+  editor.setReadOnly(true)
 }
+
+editor.on('change', (delta) => {
+  log.append(JSON.stringify(delta))
+})
 
 log.on('ready', function() {
   console.log(log.key.toString('hex'))
@@ -40,7 +35,7 @@ log.on('ready', function() {
 
 log.createReadStream({live: true})
   .on('data', function (data) {
-    var div = document.createElement('div')
-    div.innerHTML = data.toString()
-    $('#timeline').appendChild(div)
+    if (key != null) {
+      editor.getSession().getDocument().applyDeltas([JSON.parse(data)]);
+    }
   })
