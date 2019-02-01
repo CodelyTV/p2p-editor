@@ -15,6 +15,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack",
+    "build": "webpack",
     "watch": "webpack --watch",
     "test": "jest"
   },
