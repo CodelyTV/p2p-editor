@@ -1,0 +1,8 @@
+version: '3'
+services: 
+  signalhub:
+    build:
+      context: .
+      dockerfile: "signalhub.Dockerfile"
+    ports:
+      - "8080:8080"
