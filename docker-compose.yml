@@ -1,14 +1,10 @@
 version: '3'
 services:
   p2p-editor:
-    build:
-      context: .
-      dockerfile: "p2p-editor.Dockerfile"
+    build: .
     ports:
       - "8000:80"
   signalhub:
-    build:
-      context: .
-      dockerfile: "signalhub.Dockerfile"
+    image: "santaka/signalhub"
     ports:
       - "8080:8080"
