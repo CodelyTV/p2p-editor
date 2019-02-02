@@ -2,28 +2,11 @@
 
 # P2P Editor
 
-P2P code editor for live coding sessions.
-
-## Introduction
-
-TODO
+P2P code editor for live coding sessions that works in the browser.
 
 ## Architecture
 
 WebRTC
-
-## Features
-
-- [ ] Create a new file
-- [ ] Open an existing file
-- [ ] Basic text editing: add, remove and replace text
-- [ ] Authorize someone to edit a file
-- [ ] See online users name and avatar
-- [ ] See online users cursor position
-- [ ] Explore document revisions
-- [ ] Open revision
-- [ ] Undo changes
-- [ ] Peer discovery
 
 ## Live demo
 
@@ -35,4 +18,4 @@ TODO
 
 ## License
 
-TODO
+MIT
