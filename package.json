@@ -25,11 +25,13 @@
   "homepage": "https://github.com/CodelyTV/p2p-editor#readme",
   "devDependencies": {
     "copy-webpack-plugin": "^4.6.0",
+    "file-loader": "^3.0.1",
     "jest": "^23.6.0",
     "webpack": "^4.28.2",
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "ace-builds": "^1.4.2",
     "hypercore": "^6.24.0",
     "random-access-memory": "^3.1.1",
     "signalhub": "^4.9.0",

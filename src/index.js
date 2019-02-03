@@ -2,6 +2,8 @@ var hypercore = require('hypercore')
 var ram = require('random-access-memory')
 var webrtcSwarm = require('webrtc-swarm')
 var signalhub = require('signalhub')
+var ace = require('ace-builds')
+require('ace-builds/webpack-resolver')
 
 var key = window.location.toString().split('#')[1]
 
