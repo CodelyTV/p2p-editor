@@ -12,5 +12,8 @@ module.exports = {
     new CopyWebpackPlugin([
         { from: 'public' }
     ])
-  ]
+  ],
+  node: {
+    fs: 'empty'
+  }
 };
