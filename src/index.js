@@ -21,7 +21,10 @@ editor.on('change', (delta) => {
 })
 
 log.on('ready', function() {
-  console.log(log.key.toString('hex'))
+  if (key == null) {
+    window.history.pushState(null, null, `#${log.key.toString('hex')}`)
+  }
+
   var hub = signalhub(log.key.toString('hex'), [
     'http://localhost:8080'
   ])
