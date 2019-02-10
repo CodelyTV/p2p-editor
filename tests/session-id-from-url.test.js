@@ -10,3 +10,11 @@ test('it should extract session id from first argument of URL', () => {
     url = 'https://domainname.tld/session-id-3/another-argument'
     expect(sessionIdFromUrl(url)).toBe('session-id-3');
 });
+
+test('it should return null when session id is not in URL', () => {
+    let url = 'http://domainname.tld'
+    expect(sessionIdFromUrl(url)).toBeNull();
+
+    url = 'http://domainname.tld/'
+    expect(sessionIdFromUrl(url)).toBeNull();
+});
