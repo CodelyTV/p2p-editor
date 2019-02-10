@@ -1,0 +1,12 @@
+sessionIdFromUrl = require('../src/session-id-from-url')
+
+test('it should extract session id from first argument of URL', () => {
+    let url = 'http://domainname.tld/session-id-1'
+    expect(sessionIdFromUrl(url)).toBe('session-id-1');
+
+    url = 'http://domainname.tld/session-id-2/'
+    expect(sessionIdFromUrl(url)).toBe('session-id-2');
+
+    url = 'https://domainname.tld/session-id-3/another-argument'
+    expect(sessionIdFromUrl(url)).toBe('session-id-3');
+});
