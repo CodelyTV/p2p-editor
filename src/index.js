@@ -4,8 +4,9 @@ var webrtcSwarm = require('webrtc-swarm')
 var signalhub = require('signalhub')
 var ace = require('ace-builds')
 require('ace-builds/webpack-resolver')
+var sessionIdFromUrl = require('./session-id-from-url')
 
-var key = window.location.toString().split('#')[1]
+var key = sessionIdFromUrl(window.location.toString())
 
 var log = hypercore(ram, key)
 
@@ -22,7 +23,7 @@ editor.on('change', (delta) => {
 
 log.on('ready', function() {
   if (key == null) {
-    window.history.pushState(null, null, `#${log.key.toString('hex')}`)
+    window.history.pushState(null, null, log.key.toString('hex'))
   }
 
   var hub = signalhub(log.key.toString('hex'), [
