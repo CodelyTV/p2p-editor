@@ -42,6 +42,8 @@ log.on('ready', function() {
 log.createReadStream({live: true})
   .on('data', function (data) {
     if (key != null) {
-      editor.getSession().getDocument().applyDeltas([JSON.parse(data)]);
+      var delta = JSON.parse(data);
+      editor.getSession().getDocument().applyDeltas([delta]);
+      editor.gotoLine(delta.end.row + 1, delta.end.column, true)
     }
   })
