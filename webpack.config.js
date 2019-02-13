@@ -15,5 +15,9 @@ module.exports = {
   ],
   node: {
     fs: 'empty'
+  },
+  devServer: {
+    port: 8000,
+    historyApiFallback: true
   }
 };
