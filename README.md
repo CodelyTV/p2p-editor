@@ -1,21 +1,42 @@
-[![Build Status](https://travis-ci.com/CodelyTV/p2p-editor.svg?branch=master)](https://travis-ci.com/CodelyTV/p2p-editor)
+<!-- LOGO -->
+<p align="center">
+  <a href="http://codely.tv">
+    <img src="http://codely.tv/wp-content/uploads/2016/05/cropped-logo-codelyTV.png" width="192px" height="192px"/>
+  </a>
+</p>
 
-# P2P Editor
+<!-- TITLE -->
+<h1 align="center">
+  P2P editor
+</h1>
 
+<!-- BADGES -->
+<p align="center">
+    <a href="https://github.com/CodelyTV"><img src="https://img.shields.io/badge/CodelyTV-OS-green.svg?style=flat-square" alt="codely.tv"/></a>
+    <a href="http://pro.codely.tv"><img src="https://img.shields.io/badge/CodelyTV-PRO-black.svg?style=flat-square" alt="CodelyTV Courses"/></a>
+    <a href="https://travis-ci.com/CodelyTV/p2p-editor"><img src="https://travis-ci.com/CodelyTV/p2p-editor.svg?branch=master"/></a>
+</p>
+
+<!-- SUMMARY -->
+<p align="center">
 P2P code editor for live coding sessions that works in the browser.
+</p>
 
-## Architecture
+<!-- TABLE OF CONTENTS -->
+## 📜 Table of Contents
 
-WebRTC
+## 💡 What does P2P Editor do?
 
-## Live demo
+## 🤔 Why P2P?
 
-TODO
+## 🏗️ Architecture
 
-## Contribute
+## 🚀 Environment setup
 
-TODO
+## 💻 Live demo
 
-## License
+## ℹ️ About
+## 🤝 Contributing
+## ⚖️ License
 
-MIT
+The MIT License (MIT). Please see [License](LICENSE) for more information.
