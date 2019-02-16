@@ -27,7 +27,7 @@ log.on('ready', function() {
   }
 
   var hub = signalhub(log.key.toString('hex'), [
-    'http://localhost:8080'
+    process.env.SIGNALHUB_URL
   ])
 
   var sw = webrtcSwarm(hub)
