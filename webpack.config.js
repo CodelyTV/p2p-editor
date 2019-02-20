@@ -19,7 +19,12 @@ module.exports = {
     fs: 'empty'
   },
   devServer: {
+    host: '0.0.0.0',
     port: 8000,
     historyApiFallback: true
+  },
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
   }
 };
