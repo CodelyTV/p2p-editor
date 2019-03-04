@@ -120,7 +120,7 @@ Workflow:
 ### 🌍 Application execution
 
 1. Start the application with Docker Compose: `docker-compose up`
-2. Go to [http://localhost:8000](http://localhost:8000)
+2. Go to [http://localhost:3617](http://localhost:3617)
 
 ### ✅ Tests execution
 

@@ -3,10 +3,10 @@ services:
   p2p-editor:
     build: .
     ports:
-      - "8000:8000"
+      - "3617:3617"
     volumes:
       - ".:/usr/src/app"
   signalhub:
     image: "santaka/signalhub"
     ports:
-      - "8080:8080"
+      - "3618:8080"
