@@ -1,16 +1,16 @@
-var p2pEditor = require('./p2p-editor')
-var sessionIdFromUrl = require('./session-id-from-url')
+const P2PEditor = require('./p2p-editor')
+const sessionIdFromUrl = require('./session-id-from-url')
 
-var sessionId = sessionIdFromUrl(window.location.toString())
+const sessionId = sessionIdFromUrl(window.location.toString())
 
-var session = p2pEditor(sessionId)
+const session = new P2PEditor(sessionId)
 
-session.on('ready', function(sessionId) {
+session.on('ready', (sessionId) => {
   if (!session.follower) {
     window.history.pushState(null, null, sessionId)
   }
 })
 
-session.on('peer', function() {
+session.on('peer', () => {
   console.log('new peer')
 })
