@@ -153,7 +153,7 @@ How you can contribute?
 - Providing feedback and [suggesting new features](https://github.com/CodelyTV/p2p-editor/issues/new).
 - [Giving the repo a star](https://github.com/CodelyTV/p2p-editor/stargazers).
 - Getting involved in development resolving [issues labeled as `good first issue`](https://github.com/CodelyTV/p2p-editor/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
-- Adding learning resources to [awesome-p2p]("https://github.com/CodelyTV/awesome-p2p) repository.
+- Adding learning resources to [Awesome P2P](https://github.com/CodelyTV/awesome-p2p) repository.
 
 You can get an idea of the roadmap of P2P Editor looking at the [backlog](https://github.com/CodelyTV/p2p-editor/issues) and the [wiki](https://github.com/CodelyTV/p2p-editor/wiki).
 
