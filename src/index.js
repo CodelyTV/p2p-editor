@@ -1,49 +1,16 @@
-var hypercore = require('hypercore')
-var ram = require('random-access-memory')
-var webrtcSwarm = require('webrtc-swarm')
-var signalhub = require('signalhub')
-var ace = require('ace-builds')
-require('ace-builds/webpack-resolver')
-var sessionIdFromUrl = require('./session-id-from-url')
+const P2PEditor = require('./p2p-editor')
+const sessionIdFromUrl = require('./session-id-from-url')
 
-var key = sessionIdFromUrl(window.location.toString())
+const sessionId = sessionIdFromUrl(window.location.toString())
 
-var log = hypercore(ram, key)
+const p2pEditor = new P2PEditor(sessionId)
 
-var editor = ace.edit("editor");
-editor.setTheme("ace/theme/monokai");
-editor.session.setMode("ace/mode/javascript");
-if (key != null) {
-  editor.setReadOnly(true)
-}
-
-editor.on('change', (delta) => {
-  log.append(JSON.stringify(delta))
-})
-
-log.on('ready', function() {
-  if (key == null) {
-    window.history.pushState(null, null, log.key.toString('hex'))
+p2pEditor.on('ready', (sessionId) => {
+  if (!p2pEditor.isFollower) {
+    window.history.pushState(null, null, sessionId)
   }
-
-  var hub = signalhub(log.key.toString('hex'), [
-    process.env.SIGNALHUB_URL
-  ])
-
-  var sw = webrtcSwarm(hub)
-
-  sw.on('peer', function(peer) {
-    console.log('new peer')
-    var stream = log.replicate({live: true, encrypt: false})
-    peer.pipe(stream).pipe(peer)
-  })
 })
 
-log.createReadStream({live: true})
-  .on('data', function (data) {
-    if (key != null) {
-      var delta = JSON.parse(data);
-      editor.getSession().getDocument().applyDeltas([delta]);
-      editor.gotoLine(delta.end.row + 1, delta.end.column, true)
-    }
-  })
+p2pEditor.on('session.new_peer_appeared', () => {
+  console.log('new peer')
+})
