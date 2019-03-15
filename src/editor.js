@@ -13,7 +13,7 @@ class Editor extends EventEmitter {
     this.aceEditor.setReadOnly(readonly)
 
     this.aceEditor.on('change', (delta) => {
-      this.emit('change', delta)
+      this.emit('editor.updated', delta)
     })
   }
 

@@ -3,14 +3,14 @@ const sessionIdFromUrl = require('./session-id-from-url')
 
 const sessionId = sessionIdFromUrl(window.location.toString())
 
-const session = new P2PEditor(sessionId)
+const p2pEditor = new P2PEditor(sessionId)
 
-session.on('ready', (sessionId) => {
-  if (!session.follower) {
+p2pEditor.on('ready', (sessionId) => {
+  if (!p2pEditor.isFollower) {
     window.history.pushState(null, null, sessionId)
   }
 })
 
-session.on('peer', () => {
+p2pEditor.on('session.new_peer_appeared', () => {
   console.log('new peer')
 })

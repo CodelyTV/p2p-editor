@@ -2,22 +2,22 @@ const EventEmitter = require('events')
 const webrtcSwarm = require('webrtc-swarm')
 const signalhub = require('signalhub')
 const Editor = require('./editor')
-const P2PFile = require('./p2p-file')
+const ChangeLog = require('./change-log')
 
 class P2PEditor extends EventEmitter {
 
   constructor(sessionId) {
     super()
     this.sessionId = sessionId
-    this.follower = this.sessionId != null
-    this.file = new P2PFile(this.sessionId)
-    this.editor = new Editor(this.follower)
+    this.isFollower = this.sessionId != null
+    this.changeLog = new ChangeLog(this.sessionId)
+    this.editor = new Editor(this.isFollower)
 
-    this.editor.on('change', (delta) => {
-      this.file.append(delta)
+    this.editor.on('editor.updated', (delta) => {
+      this.changeLog.append(delta)
     })
   
-    this.file.on('ready', (key) => {
+    this.changeLog.on('change_log.loaded', (key) => {
       this.sessionId = key
   
       const hub = signalhub(this.sessionId, [
@@ -27,15 +27,15 @@ class P2PEditor extends EventEmitter {
       const sw = webrtcSwarm(hub)
   
       sw.on('peer', (peer) => {
-        this.file.replicate(peer, {live: true, encrypt: false})
-        this.emit('peer', peer)
+        this.changeLog.replicate(peer, {live: true, encrypt: false})
+        this.emit('session.new_peer_appeared', peer)
       })
   
       this.emit('ready', this.sessionId)
     })
   
-    this.file.on('data', (data) => {
-      if (this.follower) {
+    this.changeLog.on('change_log.changes_applied', (data) => {
+      if (this.isFollower) {
         this.editor.applyDelta(data)
       }
     })
