@@ -6,6 +6,7 @@ services:
       - "3617:3617"
     volumes:
       - ".:/usr/src/app"
+      - "/usr/src/app/node_modules"
   signalhub:
     image: "santaka/signalhub"
     ports:
