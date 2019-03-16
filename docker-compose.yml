@@ -8,6 +8,8 @@ services:
       - ".:/usr/src/app"
       - "/usr/src/app/node_modules"
   signalhub:
-    image: "santaka/signalhub"
+    build:
+      context: .
+      dockerfile: ./signalhub.Dockerfile
     ports:
-      - "3618:8080"
+      - "3618:3618"
