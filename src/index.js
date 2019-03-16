@@ -1,16 +1,42 @@
-const P2PEditor = require('./p2p-editor')
+const Session = require('./session')
 const sessionIdFromUrl = require('./session-id-from-url')
+const Editor = require('./editor')
+const ChangeLog = require('./change-log')
 
-const sessionId = sessionIdFromUrl(window.location.toString())
+class P2PEditor {
 
-const p2pEditor = new P2PEditor(sessionId)
+  constructor() {
+    this.sessionId = sessionIdFromUrl(window.location.toString())
+    this.isFollower = this.sessionId != null
+    this.changeLog = new ChangeLog(this.sessionId)
+    this.editor = new Editor(this.isFollower)
+    this.session = null
 
-p2pEditor.on('ready', (sessionId) => {
-  if (!p2pEditor.isFollower) {
-    window.history.pushState(null, null, sessionId)
+    this.editor.on('editor.updated', (delta) => {
+      this.changeLog.append(delta)
+    })
+  
+    this.changeLog.on('change_log.loaded', (key) => {
+      this.session = new Session(key)
+
+      this.session.on('session.ready', (sessionId) => {
+        if (!this.isFollower) {
+          window.history.pushState(null, null, sessionId)
+        }
+      })
+      
+      this.session.on('session.new_peer_appeared', (peer) => {
+        this.changeLog.replicate(peer, {live: true, encrypt: false})
+        console.log('new peer')
+      })
+    })
+  
+    this.changeLog.on('change_log.changes_applied', (data) => {
+      if (this.isFollower) {
+        this.editor.applyDelta(data)
+      }
+    })
   }
-})
+}
 
-p2pEditor.on('session.new_peer_appeared', () => {
-  console.log('new peer')
-})
+new P2PEditor()
