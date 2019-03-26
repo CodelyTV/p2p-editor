@@ -17,7 +17,7 @@ class P2PEditor {
     })
   
     this.changeLog.on('change_log.loaded', (key) => {
-      this.session = new Session(key)
+      this.session = new Session(key, this.isFollower)
 
       this.session.on('session.ready', (sessionId) => {
         if (!this.isFollower) {

@@ -5,3 +5,12 @@
     bottom: 0;
     left: 0;
 }
+
+video {
+    background: #fff;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 200px;
+}
