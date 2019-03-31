@@ -6,6 +6,7 @@ import sessionIdFromUrl from './session-id-from-url'
 import Editor from './editor'
 import ChangeLog from './change-log'
 import PeerSet from './peer-set'
+import PeerListComponent from './peer-list-component'
 
 
 class P2PEditor {
@@ -17,6 +18,7 @@ class P2PEditor {
     this.editor = new Editor(this.isFollower)
     this.session = null
     this.peers = new PeerSet()
+    new PeerListComponent(this.peers)
 
     ReactDOM.render(<AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />, document.getElementById('app'))
 

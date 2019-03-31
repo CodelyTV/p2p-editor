@@ -29,6 +29,10 @@ class PeerSet extends EventEmitter {
         this.peers.splice(index, 1)
         this.emit('removed', peer)
     }
+
+    forEach(callback) {
+        this.peers.forEach(callback)
+    }
 }
 
 export default PeerSet
