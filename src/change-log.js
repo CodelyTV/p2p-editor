@@ -1,6 +1,6 @@
-const EventEmitter = require('events')
-const hypercore = require('hypercore')
-const ram = require('random-access-memory')
+import { EventEmitter } from 'events'
+import hypercore from 'hypercore'
+import ram from 'random-access-memory'
 
 class ChangeLog extends EventEmitter {
 
@@ -28,4 +28,4 @@ class ChangeLog extends EventEmitter {
   }
 }
 
-module.exports = ChangeLog
+export default ChangeLog
