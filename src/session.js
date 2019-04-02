@@ -1,6 +1,6 @@
-const EventEmitter = require('events')
-const webrtcSwarm = require('webrtc-swarm')
-const signalhub = require('signalhub')
+import { EventEmitter } from 'events'
+import webrtcSwarm from 'webrtc-swarm'
+import  signalhub from 'signalhub'
 
 class Session extends EventEmitter {
 
@@ -24,4 +24,4 @@ class Session extends EventEmitter {
   }
 }
 
-module.exports = Session
+export default Session

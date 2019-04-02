@@ -1,7 +1,7 @@
-const Session = require('./session')
-const sessionIdFromUrl = require('./session-id-from-url')
-const Editor = require('./editor')
-const ChangeLog = require('./change-log')
+import Session from './session'
+import sessionIdFromUrl from './session-id-from-url'
+import Editor from './editor'
+import ChangeLog from './change-log'
 
 class P2PEditor {
 

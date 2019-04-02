@@ -1,6 +1,6 @@
-const EventEmitter = require('events')
-const ace = require('ace-builds')
-require('ace-builds/webpack-resolver')
+import { EventEmitter } from 'events'
+import ace from 'ace-builds'
+import 'ace-builds/webpack-resolver'
 
 class Editor extends EventEmitter {
 
@@ -23,4 +23,4 @@ class Editor extends EventEmitter {
   }
 }
 
-module.exports = Editor
+export default Editor
