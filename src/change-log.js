@@ -23,8 +23,7 @@ class ChangeLog extends EventEmitter {
   } 
 
   replicate(peer, options) {
-    const stream = this.log.replicate(options)
-    peer.pipe(stream).pipe(peer)
+    return this.log.replicate(options)
   }
 }
 

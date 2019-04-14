@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import AppComponent from './components/AppComponent'
+import hypercore from 'hypercore'
+import ram  from 'random-access-memory'
 import Session from './session'
 import sessionIdFromUrl from './session-id-from-url'
 import Editor from './editor'
@@ -27,28 +29,46 @@ class P2PEditor {
     })
 
     this.changeLog.on('change_log.loaded', (key) => {
-      this.session = new Session(key)
+      this.myLog = hypercore(ram)
 
-      this.session.on('session.ready', (sessionId) => {
-        if (!this.isFollower) {
-          window.history.pushState(null, null, sessionId)
-        }
-      })
+      this.myLog.on('ready', () => {
 
-      this.session.on('session.new_peer_appeared', (peer) => {
-        this.peers.add(peer)
-        this.changeLog.replicate(peer, {live: true, encrypt: false})
-      })
+        this.myLog.append(this.myLog.key.toString('hex') + ': hi')
+        this.session = new Session(key, this.myLog.key.toString('hex'))
 
-      this.session.on('session.peer_disconnected', (peer) => {
-        this.peers.remove(peer)
+        this.session.on('session.ready', (sessionId) => {
+          if (!this.isFollower) {
+            window.history.pushState(null, null, sessionId)
+          }
+        })
+
+        this.session.on('session.new_peer_appeared', (peer, peerId) => {
+
+          var remoteLog = hypercore(ram, peerId)
+          remoteLog.on('ready', () => {
+            this.peers.add(peer)
+            var stream = this.changeLog.replicate(peer, {live: true, encrypt: false})
+            this.myLog.replicate({stream: stream})
+            remoteLog.replicate({stream: stream})
+            peer.pipe(stream).pipe(peer)
+
+            remoteLog.createReadStream({live: true})
+              .on('data', (data) => {
+                console.log(data.toString())
+              })
+          })
+        })
+
+        this.session.on('session.peer_disconnected', (peer) => {
+          this.peers.remove(peer)
+        })
       })
     })
 
     this.peers.on('added', (peer) => {
       console.log(`connected ${peer}`)
     })
-    
+
     this.peers.on('removed', (peer) => {
       console.log(`disconnected ${peer}`)
     })
