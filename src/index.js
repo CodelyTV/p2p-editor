@@ -33,7 +33,6 @@ class P2PEditor {
 
       this.myLog.on('ready', () => {
 
-        this.myLog.append(this.myLog.key.toString('hex') + ': hi')
         this.session = new Session(key, this.myLog.key.toString('hex'))
 
         this.session.on('session.ready', (sessionId) => {
@@ -43,27 +42,29 @@ class P2PEditor {
         })
 
         this.session.on('session.new_peer_appeared', (peer, peerId) => {
+          this.peers.add(peerId)
 
           var remoteLog = hypercore(ram, peerId)
           remoteLog.on('ready', () => {
-            this.peers.add(peer)
             var stream = this.changeLog.replicate(peer, {live: true, encrypt: false})
             this.myLog.replicate({stream: stream})
             remoteLog.replicate({stream: stream})
             peer.pipe(stream).pipe(peer)
-
-            remoteLog.createReadStream({live: true})
-              .on('data', (data) => {
-                console.log(data.toString())
-              })
           })
+
+          remoteLog.createReadStream({live: true})
+            .on('data', (data) => {
+              // eslint-disable-next-line no-console
+              console.log(data.toString())
+            })
         })
 
-        this.session.on('session.peer_disconnected', (peer) => {
-          this.peers.remove(peer)
+        this.session.on('session.peer_disconnected', (peer, peerId) => {
+          this.peers.remove(peerId)
         })
       })
     })
+<<<<<<< HEAD
 
     this.peers.on('added', (peer) => {
       console.log(`connected ${peer}`)
@@ -73,6 +74,9 @@ class P2PEditor {
       console.log(`disconnected ${peer}`)
     })
 
+=======
+
+>>>>>>> show hypercore id of connected peer
     this.changeLog.on('change_log.changes_applied', (data) => {
       if (this.isFollower) {
         this.editor.applyDelta(data)

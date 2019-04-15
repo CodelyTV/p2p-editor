@@ -86,3 +86,12 @@
     width: calc(100vw - 20px);
   }
 }
+
+#peer-list {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 150px;
+    background: #fff;
+}

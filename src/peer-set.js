@@ -4,29 +4,16 @@ class PeerSet extends EventEmitter {
 
     constructor() {
         super()
-        this.peers = []
-    }
-
-    has(peer) {
-        return this.peers.indexOf(peer) !== -1
+        this.peers = new Set()
     }
 
     add(peer) {
-        if (this.has(peer)) {
-            return
-        }
-
-        this.peers.push(peer)
+        this.peers.add(peer)
         this.emit('added', peer)
     }
 
     remove(peer) {
-        var index = this.peers.indexOf(peer)
-        if (index === -1) {
-            return
-        }
-
-        this.peers.splice(index, 1)
+        this.peers.delete(peer)
         this.emit('removed', peer)
     }
 

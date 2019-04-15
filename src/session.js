@@ -18,8 +18,8 @@ class Session extends EventEmitter {
       this.emit('session.new_peer_appeared', peer, peerId)
     })
 
-    sw.on('disconnect', (peer) => {
-      this.emit('session.peer_disconnected', peer)
+    sw.on('disconnect', (peer, peerId) => {
+      this.emit('session.peer_disconnected', peer, peerId)
     })
 
     setImmediate(() => {

@@ -4,11 +4,11 @@ class PeerListComponent {
         this.peers = peers
         this.render()
 
-        this.peers.on('added', (peer) => {
+        this.peers.on('added', () => {
             this.render()
         })
           
-        this.peers.on('removed', (peer) => {
+        this.peers.on('removed', () => {
             this.render()
         })
     }
@@ -18,7 +18,7 @@ class PeerListComponent {
         peerList.innerHTML = ''
         this.peers.forEach((peer) => {
             const peerListElement = document.createElement('li')
-            peerListElement.innerHTML = peer._id
+            peerListElement.innerHTML = peer
             peerList.appendChild(peerListElement)
         })
     }
