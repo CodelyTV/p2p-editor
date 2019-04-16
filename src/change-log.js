@@ -6,7 +6,7 @@ class ChangeLog extends EventEmitter {
 
   constructor(key) {
     super()
-    this.log = new hypercore(ram, key)
+    this.log = new hypercore(ram, key, {valueEncoding: 'json'})
 
     this.log.on('ready', () => {
       this.emit('change_log.loaded', this.log.key.toString('hex'))
@@ -14,12 +14,12 @@ class ChangeLog extends EventEmitter {
 
     this.log.createReadStream({live: true})
       .on('data', (data) => {
-        this.emit('change_log.changes_applied', JSON.parse(data))
+        this.emit('change_log.changes_applied', data)
       })
   }
 
   append(data) {
-    this.log.append(JSON.stringify(data))
+    this.log.append(data)
   } 
 
   replicate(peer, options) {
