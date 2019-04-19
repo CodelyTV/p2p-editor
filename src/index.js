@@ -10,6 +10,7 @@ import ChangeLog from './change-log'
 import Peer from './peer'
 import PeerSet from './peer-set'
 import PeerListComponent from './peer-list-component'
+import { randomBytes } from 'crypto';
 
 
 class P2PEditor {
@@ -34,7 +35,7 @@ class P2PEditor {
 
       this.myLog.on('ready', () => {
 
-        this.myLog.append({action: 'SET_DISPLAY_NAME', name: 'P2P Editor'})
+        this.myLog.append({action: 'SET_DISPLAY_NAME', name: randomBytes(10).toString('hex')})
 
         this.session = new Session(key, this.myLog.key.toString('hex'))
 
