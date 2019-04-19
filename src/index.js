@@ -7,6 +7,7 @@ import Session from './session'
 import sessionIdFromUrl from './session-id-from-url'
 import Editor from './editor'
 import ChangeLog from './change-log'
+import Peer from './peer'
 import PeerSet from './peer-set'
 import PeerListComponent from './peer-list-component'
 
@@ -29,9 +30,11 @@ class P2PEditor {
     })
 
     this.changeLog.on('change_log.loaded', (key) => {
-      this.myLog = hypercore(ram)
+      this.myLog = hypercore(ram, {valueEncoding: 'json'})
 
       this.myLog.on('ready', () => {
+
+        this.myLog.append({action: 'SET_DISPLAY_NAME', name: 'P2P Editor'})
 
         this.session = new Session(key, this.myLog.key.toString('hex'))
 
@@ -42,21 +45,17 @@ class P2PEditor {
         })
 
         this.session.on('session.new_peer_appeared', (peer, peerId) => {
-          this.peers.add(peerId)
 
-          var remoteLog = hypercore(ram, peerId)
+          var remoteLog = hypercore(ram, peerId, {valueEncoding: 'json'})
           remoteLog.on('ready', () => {
             var stream = this.changeLog.replicate(peer, {live: true, encrypt: false})
             this.myLog.replicate({stream: stream})
             remoteLog.replicate({stream: stream})
             peer.pipe(stream).pipe(peer)
-          })
 
-          remoteLog.createReadStream({live: true})
-            .on('data', (data) => {
-              // eslint-disable-next-line no-console
-              console.log(data.toString())
-            })
+            const user = new Peer(peerId, remoteLog)
+            this.peers.add(user)
+          })
         })
 
         this.session.on('session.peer_disconnected', (peer, peerId) => {
@@ -64,19 +63,7 @@ class P2PEditor {
         })
       })
     })
-<<<<<<< HEAD
 
-    this.peers.on('added', (peer) => {
-      console.log(`connected ${peer}`)
-    })
-
-    this.peers.on('removed', (peer) => {
-      console.log(`disconnected ${peer}`)
-    })
-
-=======
-
->>>>>>> show hypercore id of connected peer
     this.changeLog.on('change_log.changes_applied', (data) => {
       if (this.isFollower) {
         this.editor.applyDelta(data)
