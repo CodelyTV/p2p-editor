@@ -92,6 +92,13 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: 150px;
+    margin: 0;
+    padding: 0;
+    width: 200px;
     background: #fff;
+}
+
+#peer-list li {
+    list-style: none;
+    padding: 5px;
 }
