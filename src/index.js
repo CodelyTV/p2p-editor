@@ -1,7 +1,11 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import AppComponent from './components/AppComponent'
 import Session from './session'
 import sessionIdFromUrl from './session-id-from-url'
 import Editor from './editor'
 import ChangeLog from './change-log'
+
 
 class P2PEditor {
 
@@ -12,10 +16,12 @@ class P2PEditor {
     this.editor = new Editor(this.isFollower)
     this.session = null
 
+    ReactDOM.render(<AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />, document.getElementById('app'))
+
     this.editor.on('editor.updated', (delta) => {
       this.changeLog.append(delta)
     })
-  
+
     this.changeLog.on('change_log.loaded', (key) => {
       this.session = new Session(key)
 
@@ -24,14 +30,14 @@ class P2PEditor {
           window.history.pushState(null, null, sessionId)
         }
       })
-      
+
       this.session.on('session.new_peer_appeared', (peer) => {
         this.changeLog.replicate(peer, {live: true, encrypt: false})
-        // eslint-disable-next-line no-console
-        console.log('new peer')
+         // eslint-disable-next-line no-console
+         console.log('new peer')
       })
     })
-  
+
     this.changeLog.on('change_log.changes_applied', (data) => {
       if (this.isFollower) {
         this.editor.applyDelta(data)

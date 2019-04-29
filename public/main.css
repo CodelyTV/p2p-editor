@@ -1,7 +1,88 @@
-#editor { 
+/* roboto-mono-regular - latin */
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Mono'),
+       local('RobotoMono-Regular'),
+       url('fonts/roboto-mono-v6-latin-regular.woff2') format('woff2')
+}
+
+#editor {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+.page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background: #202020;
+    color: #fff;
+}
+
+.page__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.home-page__title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 36px;
+}
+
+.start-new-session,
+.join-session {
+  font-family: 'Roboto Mono', monospace;
+  padding: 15px
+}
+
+.join-session__description {
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 2;
+}
+
+.join-session__session-id {
+  word-break: break-all;
+  line-height: 1;
+}
+
+.start-new-session__button,
+.join-session__button {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 16px;
+  min-width: 200px;
+  background: #ff005c;
+  color: #000;
+  border-color: #444;
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.start-new-session__button:hover,
+.join-session__button:hover {
+  background: #ab003f;
+}
+
+@media (max-width: 767px) {
+  .start-new-session__button,
+  .join-session__button {
+    position: fixed;
+    bottom: 10;
+    left: 10;
+    height: 65px;
+    width: calc(100vw - 20px);
+  }
 }
