@@ -33,8 +33,6 @@ class P2PEditor {
 
       this.session.on('session.new_peer_appeared', (peer) => {
         this.changeLog.replicate(peer, {live: true, encrypt: false})
-         // eslint-disable-next-line no-console
-         console.log('new peer')
       })
     })
 
