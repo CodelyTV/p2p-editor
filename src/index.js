@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import AppComponent from './components/AppComponent'
 import hypercore from 'hypercore'
 import ram  from 'random-access-memory'
@@ -12,6 +14,14 @@ import PeerSet from './peer-set'
 import PeerListComponent from './peer-list-component'
 import { randomBytes } from 'crypto';
 
+const reducer = (state = {}, action) => {
+  return state
+}
+
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
 class P2PEditor {
 
@@ -24,7 +34,12 @@ class P2PEditor {
     this.peers = new PeerSet()
     new PeerListComponent(this.peers)
 
-    ReactDOM.render(<AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />, document.getElementById('app'))
+    ReactDOM.render(
+      <Provider store={store}>
+        <AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />
+      </Provider>,
+      document.getElementById('app')
+    )
 
     this.editor.on('editor.updated', (delta) => {
       this.changeLog.append(delta)
