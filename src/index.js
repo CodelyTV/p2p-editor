@@ -34,6 +34,16 @@ class P2PEditor {
     this.peers = new PeerSet()
     new PeerListComponent(this.peers)
 
+    this.peers.on('added', (peer) => {
+      store.dispatch({
+        type: 'USER_CONNECTED',
+        userId: peer.id
+      })
+      peer.subscribe((action) => {
+        store.dispatch(action)
+      })
+    })
+
     ReactDOM.render(
       <Provider store={store}>
         <AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />
@@ -50,7 +60,7 @@ class P2PEditor {
 
       this.myLog.on('ready', () => {
 
-        this.myLog.append({action: 'SET_DISPLAY_NAME', name: randomBytes(10).toString('hex')})
+        this.myLog.append({type: 'SET_DISPLAY_NAME', name: randomBytes(10).toString('hex')})
 
         this.session = new Session(key, this.myLog.key.toString('hex'))
 
