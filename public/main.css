@@ -22,7 +22,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 5;
+    z-index: 6;
     background: #202020;
     color: #fff;
 }
@@ -87,18 +87,19 @@
   }
 }
 
-#peer-list {
+.user-list {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
+    z-index: 5;
     margin: 0;
     padding: 0;
     width: 200px;
     background: #fff;
 }
 
-#peer-list li {
+.user-list-item {
     list-style: none;
     padding: 5px;
 }

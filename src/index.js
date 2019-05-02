@@ -11,15 +11,36 @@ import Editor from './editor'
 import ChangeLog from './change-log'
 import Peer from './peer'
 import PeerSet from './peer-set'
-import PeerListComponent from './peer-list-component'
 import { randomBytes } from 'crypto';
 
 const reducer = (state = {}, action) => {
-  return state
+  switch(action.type) {
+    case 'USER_CONNECTED':
+      return { ...state,
+        users: [
+          ...state.users,
+          {
+            id: action.userId,
+            displayName: 'Anonymous'
+          }
+        ]
+      }
+    case 'SET_DISPLAY_NAME':
+      const updatedUsers = state.users.map(user => {
+        if(action.userId === user.id){
+          return { ...user, displayName: action.displayName }
+        }
+        return user
+      })
+      return { ...state, users: updatedUsers }
+    default:
+      return state
+  }
 }
 
 const store = createStore(
   reducer,
+  {users: []},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
@@ -32,7 +53,6 @@ class P2PEditor {
     this.editor = new Editor(this.isFollower)
     this.session = null
     this.peers = new PeerSet()
-    new PeerListComponent(this.peers)
 
     this.peers.on('added', (peer) => {
       store.dispatch({
@@ -60,7 +80,11 @@ class P2PEditor {
 
       this.myLog.on('ready', () => {
 
-        this.myLog.append({type: 'SET_DISPLAY_NAME', name: randomBytes(10).toString('hex')})
+        this.myLog.append({
+          type: 'SET_DISPLAY_NAME',
+          userId: this.myLog.key.toString('hex'),
+          displayName: randomBytes(10).toString('hex')
+        })
 
         this.session = new Session(key, this.myLog.key.toString('hex'))
 

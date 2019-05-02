@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import HomePageComponent from './HomePageComponent';
+import UserListComponent from './user-list/UserListComponent'
 
 class AppComponent extends Component {
 
@@ -28,6 +30,7 @@ class AppComponent extends Component {
                       onStartSession={this.startSession}
                   />
                 }
+                <UserListComponent users={this.props.users}/>
             </div>
         )
     }
@@ -45,4 +48,10 @@ AppComponent.propTypes = {
   isFollower: PropTypes.bool.isRequired,
 }
 
-export default AppComponent
+const mapStateToProps = (state) => {
+  return {
+    users: state.users
+  }
+}
+
+export default connect(mapStateToProps)(AppComponent)
