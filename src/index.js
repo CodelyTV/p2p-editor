@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import rootReducer from './reducers'
 import AppComponent from './components/AppComponent'
 import hypercore from 'hypercore'
 import ram  from 'random-access-memory'
@@ -13,33 +14,8 @@ import Peer from './peer'
 import PeerSet from './peer-set'
 import { randomBytes } from 'crypto';
 
-const reducer = (state = {}, action) => {
-  switch(action.type) {
-    case 'USER_CONNECTED':
-      return { ...state,
-        users: [
-          ...state.users,
-          {
-            id: action.userId,
-            displayName: 'Anonymous'
-          }
-        ]
-      }
-    case 'SET_DISPLAY_NAME':
-      const updatedUsers = state.users.map(user => {
-        if(action.userId === user.id){
-          return { ...user, displayName: action.displayName }
-        }
-        return user
-      })
-      return { ...state, users: updatedUsers }
-    default:
-      return state
-  }
-}
-
 const store = createStore(
-  reducer,
+  rootReducer,
   {users: []},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
