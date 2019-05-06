@@ -13,6 +13,7 @@ import ChangeLog from './change-log'
 import Peer from './peer'
 import PeerSet from './peer-set'
 import { randomBytes } from 'crypto';
+import { initializeSession, userConnected } from './actions'
 
 const store = createStore(
   rootReducer,
@@ -31,10 +32,7 @@ class P2PEditor {
     this.peers = new PeerSet()
 
     this.peers.on('added', (peer) => {
-      store.dispatch({
-        type: 'USER_CONNECTED',
-        userId: peer.id
-      })
+      store.dispatch(userConnected(peer.id))
       peer.subscribe((action) => {
         store.dispatch(action)
       })
@@ -55,6 +53,12 @@ class P2PEditor {
       this.myLog = hypercore(ram, {valueEncoding: 'json'})
 
       this.myLog.on('ready', () => {
+
+        store.dispatch(initializeSession(
+          this.myLog.key.toString('hex'),
+          key,
+          this.isFollower
+        ))
 
         this.myLog.append({
           type: 'SET_DISPLAY_NAME',

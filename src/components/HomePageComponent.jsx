@@ -18,7 +18,7 @@ const HomePageComponent = ({isFollower, sessionId, onStartSession}) => (
 
 HomePageComponent.propTypes = {
     sessionId: PropTypes.string,
-    isFollower: PropTypes.bool.isRequired,
+    isFollower: PropTypes.bool,
     onStartSession: PropTypes.func.isRequired
 }
 

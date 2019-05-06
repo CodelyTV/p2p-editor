@@ -3,55 +3,63 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import HomePageComponent from './HomePageComponent';
 import UserListComponent from './user-list/UserListComponent'
+import { setDisplayName, startSession } from '../actions'
 
 class AppComponent extends Component {
 
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
+    this.startSession = this.startSession.bind(this);
+  }
 
-        this.startSession = this.startSession.bind(this);
+  render() {
+    const {sessionId, isFollower, isSessionStarted} = this.props
 
-        this.state = {
-            sessionId: props.sessionId,
-            isFollower: props.isFollower,
-            isSessionStarted: false
+    return (
+      <div>
+        {!isSessionStarted &&
+        <HomePageComponent
+          userId={this.props.userId}
+          sessionId={sessionId}
+          isFollower={isFollower}
+          onStartSession={this.startSession}
+        />
         }
-    }
+        <UserListComponent users={this.props.users}/>
+      </div>
+    )
+  }
 
-    render() {
-        const {sessionId, isFollower, isSessionStarted} = this.state
-
-        return (
-            <div>
-                {!isSessionStarted &&
-                  <HomePageComponent
-                      sessionId={sessionId}
-                      isFollower={isFollower}
-                      onStartSession={this.startSession}
-                  />
-                }
-                <UserListComponent users={this.props.users}/>
-            </div>
-        )
-    }
-
-    startSession() {
-      this.setState(state => ({
-          state,
-          isSessionStarted: true
-      }))
-    }
+  startSession() {
+    this.props.onStartSession(this.props.userId, 'Display name')
+  }
 }
 
 AppComponent.propTypes = {
+  userId: PropTypes.string,
   sessionId: PropTypes.string,
-  isFollower: PropTypes.bool.isRequired,
+  isSessionStarted: PropTypes.bool,
+  isFollower: PropTypes.bool,
+  onStartSession: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
+    userId: state.userId,
+    sessionId: state.sessionId,
+    isSessionStarted: state.isSessionStarted,
+    isFollower: state.isFollower,
     users: state.users
   }
 }
 
-export default connect(mapStateToProps)(AppComponent)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onStartSession: (userId, displayName) => {
+      dispatch(startSession())
+      dispatch(setDisplayName(userId, displayName))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppComponent)
