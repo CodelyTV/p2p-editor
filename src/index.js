@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers'
 import AppComponent from './components/AppComponent'
 import hypercore from 'hypercore'
@@ -12,14 +13,7 @@ import Editor from './editor'
 import ChangeLog from './change-log'
 import Peer from './peer'
 import PeerSet from './peer-set'
-import { randomBytes } from 'crypto';
 import { initializeSession, userConnected } from './actions'
-
-const store = createStore(
-  rootReducer,
-  {users: []},
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
 
 class P2PEditor {
 
@@ -31,20 +25,6 @@ class P2PEditor {
     this.session = null
     this.peers = new PeerSet()
 
-    this.peers.on('added', (peer) => {
-      store.dispatch(userConnected(peer.id))
-      peer.subscribe((action) => {
-        store.dispatch(action)
-      })
-    })
-
-    ReactDOM.render(
-      <Provider store={store}>
-        <AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />
-      </Provider>,
-      document.getElementById('app')
-    )
-
     this.editor.on('editor.updated', (delta) => {
       this.changeLog.append(delta)
     })
@@ -54,17 +34,40 @@ class P2PEditor {
 
       this.myLog.on('ready', () => {
 
+        const notifyPeers = store => next => action => {
+          if (action.type === 'SET_DISPLAY_NAME' && action.userId === this.myLog.key.toString('hex')) {
+            this.myLog.append(action)
+          }
+          return next(action)
+        }
+
+        const store = createStore(
+          rootReducer,
+          {users: []},
+          composeWithDevTools(
+            applyMiddleware(notifyPeers)
+          )
+        )
+
         store.dispatch(initializeSession(
           this.myLog.key.toString('hex'),
           key,
           this.isFollower
         ))
 
-        this.myLog.append({
-          type: 'SET_DISPLAY_NAME',
-          userId: this.myLog.key.toString('hex'),
-          displayName: randomBytes(10).toString('hex')
+        this.peers.on('added', (peer) => {
+          store.dispatch(userConnected(peer.id))
+          peer.subscribe((action) => {
+            store.dispatch(action)
+          })
         })
+
+        ReactDOM.render(
+          <Provider store={store}>
+            <AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />
+          </Provider>,
+          document.getElementById('app')
+        )
 
         this.session = new Session(key, this.myLog.key.toString('hex'))
 
