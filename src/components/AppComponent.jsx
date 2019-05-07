@@ -22,7 +22,7 @@ class AppComponent extends Component {
           userId={this.props.userId}
           sessionId={sessionId}
           isFollower={isFollower}
-          onStartSession={this.startSession}
+          onStartSession={(displayName) => this.startSession(displayName)}
         />
         }
         <UserListComponent users={this.props.users}/>
@@ -30,8 +30,8 @@ class AppComponent extends Component {
     )
   }
 
-  startSession() {
-    this.props.onStartSession(this.props.userId, 'Display name')
+  startSession(displayName) {
+    this.props.onStartSession(this.props.userId, displayName)
   }
 }
 

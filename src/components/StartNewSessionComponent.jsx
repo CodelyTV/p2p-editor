@@ -1,11 +1,43 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-const StartNewSessionComponent = ({onStartSession}) => (
-  <div className="start-new-session">
-      <button className="start-new-session__button" onClick={onStartSession}>Start new session</button>
-  </div>
-)
+class StartNewSessionComponent extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      displayName: ''
+    }
+  }
+
+  render() {
+    const { onStartSession } = this.props
+
+    return (
+      <div className="start-new-session">
+        <input type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
+        <button className="start-new-session__button" onClick={() => this.onStartSessionClicked() }>Start new session</button>
+      </div>
+    )
+  }
+
+  onDisplayNameChanged(e) {
+    const displayName = e.target.value
+
+    this.state = {
+      ...this.state,
+      displayName
+    }
+  }
+
+  onStartSessionClicked() {
+    if (this.state.displayName === '') {
+      return;
+    }
+
+    this.props.onStartSession(this.state.displayName)
+  }
+}
 
 StartNewSessionComponent.propTypes = {
   onStartSession: PropTypes.func.isRequired
