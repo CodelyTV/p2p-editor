@@ -12,17 +12,23 @@ class JoinSessionComponent extends Component {
   }
 
   render() {
-    const { sessionId, onJoinSession } = this.props
+    const { sessionId } = this.props
 
     return (
-      <div className="join-session">
+      <form className="join-session" onSubmit={(e) => this.onJoinSessionSubmit(e) }>
         <p className="join-session__description">
           You are joining the session<br/>
           <span className="join-session__session-id">{sessionId}</span>
         </p>
-        <input className="join-session__display-name" type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
-        <button className="join-session__button" onClick={() => onJoinSession(this.state.displayName)}>Join session</button>
-      </div>
+        <input
+          className="join-session__display-name"
+          type="text"
+          placeholder="Display name"
+          required
+          onKeyUp={(e) => this.onDisplayNameChanged(e)}
+        />
+        <button className="join-session__button">Join session</button>
+      </form>
     )
   }
 
@@ -33,6 +39,16 @@ class JoinSessionComponent extends Component {
       ...prevState,
       displayName
     }))
+  }
+
+  onJoinSessionSubmit(e) {
+    e.preventDefault();
+
+    if (this.state.displayName === '') {
+      return;
+    }
+
+    this.props.onJoinSession(this.state.displayName)
   }
 }
 

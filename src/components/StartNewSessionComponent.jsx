@@ -12,10 +12,16 @@ class StartNewSessionComponent extends Component {
 
   render() {
     return (
-      <div className="start-new-session">
-        <input className="start-new-session__display-name" type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
-        <button className="start-new-session__button" onClick={() => this.onStartSessionClicked() }>Start new session</button>
-      </div>
+      <form className="start-new-session" onSubmit={(e) => this.onStartSessionSubmit(e) }>
+        <input
+          className="start-new-session__display-name"
+          type="text"
+          placeholder="Display name"
+          required
+          onKeyUp={(e) => this.onDisplayNameChanged(e)}
+        />
+        <button className="start-new-session__button">Start new session</button>
+      </form>
     )
   }
 
@@ -28,7 +34,9 @@ class StartNewSessionComponent extends Component {
     }))
   }
 
-  onStartSessionClicked() {
+  onStartSessionSubmit(e) {
+    e.preventDefault();
+
     if (this.state.displayName === '') {
       return;
     }
