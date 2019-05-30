@@ -20,7 +20,7 @@ class JoinSessionComponent extends Component {
           You are joining the session<br/>
           <span className="join-session__session-id">{sessionId}</span>
         </p>
-        <input type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
+        <input className="join-session__display-name" type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
         <button className="join-session__button" onClick={() => onJoinSession(this.state.displayName)}>Join session</button>
       </div>
     )

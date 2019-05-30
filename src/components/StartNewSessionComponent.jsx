@@ -13,7 +13,7 @@ class StartNewSessionComponent extends Component {
   render() {
     return (
       <div className="start-new-session">
-        <input type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
+        <input className="start-new-session__display-name" type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
         <button className="start-new-session__button" onClick={() => this.onStartSessionClicked() }>Start new session</button>
       </div>
     )
