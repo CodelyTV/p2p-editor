@@ -29,10 +29,10 @@ class JoinSessionComponent extends Component {
   onDisplayNameChanged(e) {
     const displayName = e.target.value
 
-    this.state = {
-      ...this.state,
+    this.setState((prevState) => ({
+      ...prevState,
       displayName
-    }
+    }))
   }
 }
 

@@ -26,7 +26,7 @@ export default (state = {}, action) => {
           }
         ]
       }
-    case 'SET_DISPLAY_NAME':
+    case 'SET_DISPLAY_NAME': {
       const updatedUsers = state.users.map(user => {
         if(action.userId === user.id){
           return { ...user, displayName: action.displayName }
@@ -34,6 +34,7 @@ export default (state = {}, action) => {
         return user
       })
       return { ...state, users: updatedUsers }
+    }
     default:
       return state
   }

@@ -11,8 +11,6 @@ class StartNewSessionComponent extends Component {
   }
 
   render() {
-    const { onStartSession } = this.props
-
     return (
       <div className="start-new-session">
         <input type="text" placeholder="Display name" onKeyUp={(e) => this.onDisplayNameChanged(e)} />
@@ -24,10 +22,10 @@ class StartNewSessionComponent extends Component {
   onDisplayNameChanged(e) {
     const displayName = e.target.value
 
-    this.state = {
-      ...this.state,
+    this.setState((prevState) => ({
+      ...prevState,
       displayName
-    }
+    }))
   }
 
   onStartSessionClicked() {

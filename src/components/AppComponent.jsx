@@ -37,6 +37,10 @@ class AppComponent extends Component {
 
 AppComponent.propTypes = {
   userId: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    displayName: PropTypes.string
+  })),
   sessionId: PropTypes.string,
   isSessionStarted: PropTypes.bool,
   isFollower: PropTypes.bool,
