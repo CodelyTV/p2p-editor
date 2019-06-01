@@ -13,7 +13,7 @@ import Editor from './editor'
 import ChangeLog from './change-log'
 import Peer from './peer'
 import PeerSet from './peer-set'
-import { initializeSession, userConnected } from './actions'
+import {initializeSession, userConnected, userDisconnected} from './actions'
 import notifyPeers from "./middlewares/notifyPeers";
 
 class P2PEditor {
@@ -86,6 +86,7 @@ class P2PEditor {
         })
 
         this.session.on('session.peer_disconnected', (peer, peerId) => {
+          store.dispatch(userDisconnected(peerId));
           this.peers.remove(peerId)
         })
       })

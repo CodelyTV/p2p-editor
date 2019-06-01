@@ -14,6 +14,13 @@ export function userConnected(userId) {
   }
 }
 
+export function userDisconnected(userId) {
+  return {
+    type: 'USER_DISCONNECTED',
+    userId
+  }
+}
+
 export function startSession() {
   return {
     type: 'START_SESSION'

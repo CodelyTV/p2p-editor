@@ -26,6 +26,13 @@ export default (state = {}, action) => {
           }
         ]
       }
+
+    case 'USER_DISCONNECTED':
+      return {
+        ...state,
+        users: state.users.filter(user => user.id !== action.userId),
+      }
+
     case 'SET_DISPLAY_NAME': {
       const updatedUsers = state.users.map(user => {
         if(action.userId === user.id){
