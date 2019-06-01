@@ -14,6 +14,7 @@ import ChangeLog from './change-log'
 import Peer from './peer'
 import PeerSet from './peer-set'
 import { initializeSession, userConnected } from './actions'
+import notifyPeers from "./middlewares/notifyPeers";
 
 class P2PEditor {
 
@@ -34,18 +35,11 @@ class P2PEditor {
 
       this.myLog.on('ready', () => {
 
-        const notifyPeers = store => next => action => {
-          if (action.type === 'SET_DISPLAY_NAME' && action.userId === this.myLog.key.toString('hex')) {
-            this.myLog.append(action)
-          }
-          return next(action)
-        }
-
         const store = createStore(
           rootReducer,
           {users: []},
           composeWithDevTools(
-            applyMiddleware(notifyPeers)
+            applyMiddleware(notifyPeers(this.myLog))
           )
         )
 
