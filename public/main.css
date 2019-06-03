@@ -85,6 +85,10 @@
 }
 
 @media (max-width: 767px) {
+  .home-page {
+    width: 100%;
+  }
+
   .start-new-session__button,
   .join-session__button {
     position: fixed;
