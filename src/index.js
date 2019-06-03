@@ -49,6 +49,8 @@ class P2PEditor {
           this.isFollower
         ))
 
+        store.dispatch(userConnected(this.myLog.key.toString('hex')))
+
         this.peers.on('added', (peer) => {
           store.dispatch(userConnected(peer.id))
           peer.subscribe((action) => {
