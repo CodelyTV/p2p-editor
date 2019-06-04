@@ -35,7 +35,7 @@ class AppComponent extends Component {
             className="menu__item"
             onClick={() => this.openUserPanel()}
           >
-            Users
+            Users ({this.props.users.length})
           </div>
         </div>
         <UserListComponent
