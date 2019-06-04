@@ -123,16 +123,17 @@
 }
 
 .user-list__close-btn {
-  font-weight: bold;
   font-size: 28px;
   position: absolute;
   right: 15px;
-  color: #202020;
+  color: hsla(70, 3%, 83%, 1);
   cursor: pointer;
 }
 
 .user-list__title {
-  margin: 10px 8px
+  margin: 10px 8px;
+  color: hsla(70, 3%, 83%, 1);
+  font-size: 20px;
 }
 
 .user-list__container {
