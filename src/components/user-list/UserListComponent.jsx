@@ -1,47 +1,25 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from "prop-types";
 import UserComponent from './UserListItemComponent';
 
-class UserListComponent extends Component {
-  constructor(props) {
-    super(props)
+const UserListComponent = ({ users, active, onCloseClicked}) => (
+  <div className={'user-list' + (active ? ' user-list--active' : '')}>
+    <span className="user-list__close-btn" onClick={() => {onCloseClicked()}}>-</span>
+    <h2 className="user-list__title">Users</h2>
+    <ul className="user-list__container">
+      {users.map((user) => <UserComponent key={user.id} user={user}/>)}
+    </ul>
+  </div>
+)
 
-    this.state = {
-      active: true
-    }
-  }
-
-  render() {
-    const { users } = this.props
-
-    return (
-      <div className={`user-list ${this.activeClassName()}`}>
-        <span className="user-list__close-btn" onClick={() => {this.close()}}>-</span>
-        <h2 className="user-list__title">Users</h2>
-        <ul className="user-list__container">
-          {users.map((user) => <UserComponent key={user.id} user={user}/>)}
-        </ul>
-      </div>
-    )
-  }
-
-  close() {
-    this.setState((state) => ({
-      ...state,
-      active: false
-    }))
-  }
-
-  activeClassName() {
-    return this.state.active ? 'user-list--active' : ''
-  }
-}
 
 UserListComponent.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     displayName: PropTypes.string
-  }))
+  })),
+  active: PropTypes.bool.isRequired,
+  onCloseClicked: PropTypes.func.isRequired
 }
 
 export default UserListComponent

@@ -125,7 +125,7 @@
 .user-list__close-btn {
   font-size: 28px;
   position: absolute;
-  right: 15px;
+  right: 10px;
   color: hsla(70, 3%, 83%, 1);
   cursor: pointer;
 }
@@ -147,4 +147,31 @@
 .user-list-item {
     list-style: none;
     padding: 4px 10px;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  width: 30px;
+  background: hsla(75, 9%, 31%, 1);
+  border-left: 1px solid hsla(75, 9%, 50%, 1);
+  color: hsla(70, 3%, 72%, 1);
+}
+
+.menu__item {
+  -webkit-transform: rotate(90.0deg);
+  -moz-transform: rotate(90.0deg);
+  -ms-transform: rotate(90.0deg);
+  -o-transform: rotate(90.0deg);
+  transform: rotate(90.0deg);
+  padding-left: 18px;
+  font-size: 12px;
+  font-family: 'Roboto Mono', monospace;
+  color: hsla(70, 3%, 83%, 1);
+  cursor: pointer;
 }

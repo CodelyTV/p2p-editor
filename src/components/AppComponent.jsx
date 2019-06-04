@@ -10,10 +10,15 @@ class AppComponent extends Component {
   constructor(props) {
     super(props)
     this.startSession = this.startSession.bind(this);
+
+    this.state = {
+      userPanelActive: true
+    }
   }
 
   render() {
     const {sessionId, isFollower, isSessionStarted} = this.props
+    const {userPanelActive} = this.state
 
     return (
       <div>
@@ -25,13 +30,39 @@ class AppComponent extends Component {
           onStartSession={(displayName) => this.startSession(displayName)}
         />
         }
-        <UserListComponent users={this.props.users}/>
+        <div className="menu">
+          <div
+            className="menu__item"
+            onClick={() => this.openUserPanel()}
+          >
+            Users
+          </div>
+        </div>
+        <UserListComponent
+          users={this.props.users}
+          active={userPanelActive}
+          onCloseClicked={() => {this.closeUserPanel()}}
+        />
       </div>
     )
   }
 
   startSession(displayName) {
     this.props.onStartSession(this.props.userId, displayName)
+  }
+
+  openUserPanel() {
+    this.setState((state) => ({
+      ...state,
+      userPanelActive: true
+    }))
+  }
+
+  closeUserPanel() {
+    this.setState((state) => ({
+      ...state,
+      userPanelActive: false
+    }))
   }
 }
 
