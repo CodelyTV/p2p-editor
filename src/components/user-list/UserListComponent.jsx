@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import UserComponent from './UserListItemComponent';
 
 const UserListComponent = ({users}) => (
-  <ul className="user-list">
-    {users.map((user) => <UserComponent key={user.id} user={user} />)}
-  </ul>
+  <div className="user-list">
+    <h2 className="user-list__title">Users</h2>
+    <ul className="user-list__container">
+      {users.map((user) => <UserComponent key={user.id} user={user} />)}
+    </ul>
+  </div>
 )
 
 UserListComponent.propTypes = {

@@ -100,18 +100,39 @@
 }
 
 .user-list {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 5;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background: #fff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  width: 225px;
+  font-family: 'Roboto Mono', monospace;
+  background: hsla(75, 9%, 31%, 1);
+  border-left: 1px solid hsla(75, 9%, 50%, 1);
+  color: hsla(70, 3%, 72%, 1);
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+.user-list--active {
+  right: 0;
+}
+
+.user-list__title {
+  margin: 10px 8px
+}
+
+.user-list__container {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
 }
 
 .user-list-item {
     list-style: none;
-    padding: 5px;
+    padding: 4px 10px;
 }
