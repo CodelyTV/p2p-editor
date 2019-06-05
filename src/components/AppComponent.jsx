@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import HomePageComponent from './HomePageComponent';
 import UserListComponent from './user-list/UserListComponent'
 import { setDisplayName, startSession } from '../actions'
+import MenuComponent from "./menu/MenuComponent";
+import MenuItemComponent from "./menu/MenuItemComponent";
 
 class AppComponent extends Component {
 
@@ -30,14 +32,12 @@ class AppComponent extends Component {
           onStartSession={(displayName) => this.startSession(displayName)}
         />
         }
-        <div className="menu">
-          <div
-            className="menu__item"
-            onClick={() => this.openUserPanel()}
-          >
-            Users ({this.props.users.length})
-          </div>
-        </div>
+        <MenuComponent>
+          <MenuItemComponent
+            label={`Users (${this.props.users.length})`}
+            onItemClicked={() => this.openUserPanel()}
+          />
+        </MenuComponent>
         <UserListComponent
           users={this.props.users}
           active={userPanelActive}
