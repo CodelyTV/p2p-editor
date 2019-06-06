@@ -4,7 +4,7 @@ export default (state = {}, action) => {
       return {
         ...state,
         userId: action.userId,
-        sessionIs: action.sessionId,
+        sessionId: action.sessionId,
         isSessionStarted: false,
         isFollower: action.isFollower
       }
