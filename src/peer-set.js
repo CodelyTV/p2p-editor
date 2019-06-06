@@ -9,12 +9,10 @@ class PeerSet extends EventEmitter {
 
     add(peer) {
         this.peers.add(peer)
-        this.emit('added', peer)
     }
 
     remove(peer) {
         this.peers.delete(peer)
-        this.emit('removed', peer)
     }
 
     forEach(callback) {
