@@ -16,7 +16,7 @@ class P2PEditor {
   constructor() {
     this.sessionId = sessionIdFromUrl(window.location.toString())
     this.isFollower = this.sessionId != null
-    this.reactiveSwarm = new ReactiveSwarm(this.sessionId)
+    this.reactiveSwarm = new ReactiveSwarm(this.sessionId, this.isFollower)
     this.editor = new Editor(this.isFollower)
     this.store = null
 
