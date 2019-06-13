@@ -57,6 +57,6 @@
     "redux-devtools-extension": "^2.13.8",
     "signalhub": "^4.9.0",
     "webpack-dev-server": "^3.1.14",
-    "webrtc-swarm": "^2.9.0"
+    "webrtc-swarm": "git+https://github.com/QwantResearch/webrtc-swarm.git#321a608"
   }
 }

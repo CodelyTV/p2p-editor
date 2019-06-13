@@ -204,3 +204,16 @@
   font-size: 11px;
   padding: 0 8px;
 }
+
+.video {
+  background: #000;
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  width: 170px;
+  height: 128px;
+  z-index: 30;
+  box-shadow: 0 2px 4px #1d1d1d;
+  border-radius: 3px;
+  border: 1px solid hsla(75, 9%, 50%, 1)
+}

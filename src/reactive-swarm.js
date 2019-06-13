@@ -7,7 +7,7 @@ import Session from "./session";
 import Peer from "./peer";
 
 class ReactiveSwarm extends EventEmitter {
-  constructor(sessionId) {
+  constructor(sessionId, isFollower) {
     super()
     this.changeLog = new ChangeLog(sessionId)
     this.session = null
@@ -19,7 +19,7 @@ class ReactiveSwarm extends EventEmitter {
       this.myLog.on('ready', () => {
         const myKey = this.myLog.key.toString('hex')
 
-        this.session = new Session(key, myKey)
+        this.session = new Session(key, myKey, isFollower)
 
         this.session.on('session.new_peer_appeared', (peer, peerId) => {
 

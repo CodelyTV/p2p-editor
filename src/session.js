@@ -4,27 +4,61 @@ import  signalhub from 'signalhub'
 
 class Session extends EventEmitter {
 
-  constructor(sessionId, uuid) {
+  constructor(sessionId, uuid, isFollower = false) {
     super()
-    this.sessionId = sessionId
 
-    const hub = signalhub(this.sessionId, [
-      process.env.SIGNALHUB_URL
-    ])
+    const self = this;
 
-    const sw = webrtcSwarm(hub, {uuid: uuid})
+    async function init() {
+      self.sessionId = sessionId
 
-    sw.on('peer', (peer, peerId) => {
-      this.emit('session.new_peer_appeared', peer, peerId)
-    })
+      let options = {}
 
-    sw.on('disconnect', (peer, peerId) => {
-      this.emit('session.peer_disconnected', peer, peerId)
-    })
+      if (!isFollower) {
+        const constraints = {audio: true, video: true}
+        const stream = await navigator.mediaDevices.getUserMedia(constraints)
+        const video = document.querySelector('video');
+        video.muted = true;
+        video.srcObject = stream;
+        options = {
+          stream: stream,
+          offerConstraints: {
+            mandatory: {
+              OfferToReceiveAudio: true,
+              OfferToReceiveVideo: true
+            }
+          }
+        }
+      }
 
-    setImmediate(() => {
-      this.emit('session.ready', this.sessionId)
-    })
+      options.uuid = uuid;
+
+      const hub = signalhub(self.sessionId, [
+        process.env.SIGNALHUB_URL
+      ])
+
+      const sw = webrtcSwarm(hub, options)
+
+      sw.on('peer', (peer, peerId) => {
+
+        peer.on('stream', (stream) => {
+          const video = document.querySelector('video');
+          video.srcObject = stream;
+        })
+
+        self.emit('session.new_peer_appeared', peer, peerId)
+      })
+
+      sw.on('disconnect', (peer, peerId) => {
+        self.emit('session.peer_disconnected', peer, peerId)
+      })
+
+      setImmediate(() => {
+        self.emit('session.ready', self.sessionId)
+      })
+    }
+
+    init().then()
   }
 }
 

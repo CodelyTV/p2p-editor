@@ -2332,7 +2332,7 @@ date-now@^0.1.4:
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
 
-debug@2.6.9, debug@^2.1.0, debug@^2.2.0, debug@^2.3.3:
+debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
@@ -6461,7 +6461,7 @@ read-pkg@^3.0.0:
     normalize-package-data "^2.3.2"
     path-type "^3.0.0"
 
-"readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.2.6, readable-stream@^2.3.3, readable-stream@^2.3.6, readable-stream@~2.3.6:
+"readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.2.6, readable-stream@^2.3.3, readable-stream@^2.3.4, readable-stream@^2.3.6, readable-stream@~2.3.6:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
   integrity sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==
@@ -7011,16 +7011,16 @@ signed-varint@^2.0.1:
   dependencies:
     varint "~5.0.0"
 
-simple-peer@^6.0.1:
-  version "6.4.4"
-  resolved "https://registry.yarnpkg.com/simple-peer/-/simple-peer-6.4.4.tgz#4e421f485ac7b13b08077a4476934d52c5ba3bb3"
-  integrity sha1-TkIfSFrHsTsIB3pEdpNNUsW6O7M=
+simple-peer@^9.2.1:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/simple-peer/-/simple-peer-9.3.0.tgz#85ecb126b23d8730f3904f199db65e84141e0f4e"
+  integrity sha512-5dLDfrRomrS2LuZUuH2aO7yTGtHFEl5Eb+8ZzqM0KC0lHcYUyJudUomP9ZY/lPUKBx2broL/Eee9bQ53yycEgQ==
   dependencies:
-    debug "^2.1.0"
+    debug "^4.0.1"
     get-browser-rtc "^1.0.0"
     inherits "^2.0.1"
     randombytes "^2.0.3"
-    readable-stream "^2.0.5"
+    readable-stream "^2.3.4"
 
 siphash24@^1.0.1:
   version "1.1.1"
@@ -8114,16 +8114,15 @@ webpack@^4.28.2:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webrtc-swarm@^2.9.0:
+"webrtc-swarm@git+https://github.com/QwantResearch/webrtc-swarm.git#321a608":
   version "2.9.0"
-  resolved "https://registry.yarnpkg.com/webrtc-swarm/-/webrtc-swarm-2.9.0.tgz#1d905eba772742b78c1d2d90b55f9f368a9f65a9"
-  integrity sha512-aCVU7XHwtb2WtVJada2qlUUOkW+Lmjo8kfzDynpGVllUIi0gSAX9WPDhWAfqztXwJJODByqTQoXBauv747dgWg==
+  resolved "git+https://github.com/QwantResearch/webrtc-swarm.git#321a6088f09d2272eeed8452bf2ff0c9558b9ebc"
   dependencies:
     cuid "^1.2.4"
     debug "^2.2.0"
     inherits "^2.0.1"
     once "^1.3.1"
-    simple-peer "^6.0.1"
+    simple-peer "^9.2.1"
     through2 "^2.0.0"
 
 websocket-driver@>=0.5.1:
