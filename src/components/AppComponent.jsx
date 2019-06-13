@@ -1,48 +1,100 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import HomePageComponent from './HomePageComponent';
+import UserListComponent from './user-list/UserListComponent'
+import { setDisplayName, startSession } from '../actions'
+import MenuComponent from "./menu/MenuComponent";
+import MenuItemComponent from "./menu/MenuItemComponent";
 
 class AppComponent extends Component {
 
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
+    this.startSession = this.startSession.bind(this);
 
-        this.startSession = this.startSession.bind(this);
+    this.state = {
+      userPanelActive: true
+    }
+  }
 
-        this.state = {
-            sessionId: props.sessionId,
-            isFollower: props.isFollower,
-            isSessionStarted: false
+  render() {
+    const {sessionId, isFollower, isSessionStarted} = this.props
+    const {userPanelActive} = this.state
+
+    return (
+      <div>
+        {!isSessionStarted &&
+        <HomePageComponent
+          userId={this.props.userId}
+          sessionId={sessionId}
+          isFollower={isFollower}
+          onStartSession={(displayName) => this.startSession(displayName)}
+        />
         }
-    }
+        <MenuComponent>
+          <MenuItemComponent
+            label={`Users (${this.props.users.length})`}
+            onItemClicked={() => this.openUserPanel()}
+          />
+        </MenuComponent>
+        <UserListComponent
+          users={this.props.users}
+          active={userPanelActive}
+          onCloseClicked={() => {this.closeUserPanel()}}
+        />
+      </div>
+    )
+  }
 
-    render() {
-        const {sessionId, isFollower, isSessionStarted} = this.state
+  startSession(displayName) {
+    this.props.onStartSession(this.props.userId, displayName)
+  }
 
-        return (
-            <div>
-                {!isSessionStarted &&
-                  <HomePageComponent
-                      sessionId={sessionId}
-                      isFollower={isFollower}
-                      onStartSession={this.startSession}
-                  />
-                }
-            </div>
-        )
-    }
+  openUserPanel() {
+    this.setState((state) => ({
+      ...state,
+      userPanelActive: true
+    }))
+  }
 
-    startSession() {
-      this.setState(state => ({
-          state,
-          isSessionStarted: true
-      }))
-    }
+  closeUserPanel() {
+    this.setState((state) => ({
+      ...state,
+      userPanelActive: false
+    }))
+  }
 }
 
 AppComponent.propTypes = {
+  userId: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    displayName: PropTypes.string
+  })),
   sessionId: PropTypes.string,
-  isFollower: PropTypes.bool.isRequired,
+  isSessionStarted: PropTypes.bool,
+  isFollower: PropTypes.bool,
+  onStartSession: PropTypes.func.isRequired
 }
 
-export default AppComponent
+const mapStateToProps = (state) => {
+  return {
+    userId: state.userId,
+    sessionId: state.sessionId,
+    isSessionStarted: state.isSessionStarted,
+    isFollower: state.isFollower,
+    users: state.users
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onStartSession: (userId, displayName) => {
+      dispatch(startSession())
+      dispatch(setDisplayName(userId, displayName))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppComponent)

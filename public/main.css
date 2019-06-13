@@ -22,7 +22,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 5;
+    z-index: 6;
     background: #202020;
     color: #fff;
 }
@@ -43,6 +43,8 @@
 
 .start-new-session,
 .join-session {
+  display: flex;
+  flex-direction: column;
   font-family: 'Roboto Mono', monospace;
   padding: 15px
 }
@@ -58,6 +60,11 @@
   line-height: 1;
 }
 
+.start-new-session__display-name,
+.join-session__display-name {
+  padding: 10px;
+}
+
 .start-new-session__button,
 .join-session__button {
   font-family: 'Roboto Mono', monospace;
@@ -69,6 +76,7 @@
   border-radius: 3px;
   padding: 10px 20px;
   cursor: pointer;
+  margin-top: 5px;
 }
 
 .start-new-session__button:hover,
@@ -77,12 +85,94 @@
 }
 
 @media (max-width: 767px) {
+  .home-page {
+    width: 100%;
+  }
+
   .start-new-session__button,
   .join-session__button {
     position: fixed;
-    bottom: 10;
-    left: 10;
+    bottom: 10px;
+    left: 10px;
     height: 65px;
     width: calc(100vw - 20px);
   }
+}
+
+.user-list {
+  position: fixed;
+  top: 0;
+  right: -226px;
+  bottom: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  width: 225px;
+  font-family: 'Roboto Mono', monospace;
+  background: hsla(75, 9%, 31%, 1);
+  border-left: 1px solid hsla(75, 9%, 50%, 1);
+  color: hsla(70, 3%, 72%, 1);
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+.user-list--active {
+  right: 0;
+}
+
+.user-list__close-btn {
+  font-size: 28px;
+  position: absolute;
+  right: 10px;
+  color: hsla(70, 3%, 83%, 1);
+  cursor: pointer;
+}
+
+.user-list__title {
+  margin: 10px 8px;
+  color: hsla(70, 3%, 83%, 1);
+  font-size: 20px;
+}
+
+.user-list__container {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 46px);
+  font-size: 14px;
+}
+
+.user-list-item {
+    list-style: none;
+    padding: 4px 10px;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  width: 30px;
+  background: hsla(75, 9%, 31%, 1);
+  border-left: 1px solid hsla(75, 9%, 50%, 1);
+  color: hsla(70, 3%, 72%, 1);
+}
+
+.menu__item {
+  -webkit-transform: rotate(90.0deg);
+  -moz-transform: rotate(90.0deg);
+  -ms-transform: rotate(90.0deg);
+  -o-transform: rotate(90.0deg);
+  transform: rotate(90.0deg);
+  padding-left: 18px;
+  font-size: 12px;
+  font-family: 'Roboto Mono', monospace;
+  white-space: nowrap;
+  color: hsla(70, 3%, 83%, 1);
+  cursor: pointer;
 }

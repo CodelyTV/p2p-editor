@@ -4,7 +4,7 @@ import  signalhub from 'signalhub'
 
 class Session extends EventEmitter {
 
-  constructor(sessionId) {
+  constructor(sessionId, uuid) {
     super()
     this.sessionId = sessionId
 
@@ -12,10 +12,14 @@ class Session extends EventEmitter {
       process.env.SIGNALHUB_URL
     ])
 
-    const sw = webrtcSwarm(hub)
+    const sw = webrtcSwarm(hub, {uuid: uuid})
 
-    sw.on('peer', (peer) => {
-      this.emit('session.new_peer_appeared', peer)
+    sw.on('peer', (peer, peerId) => {
+      this.emit('session.new_peer_appeared', peer, peerId)
+    })
+
+    sw.on('disconnect', (peer, peerId) => {
+      this.emit('session.peer_disconnected', peer, peerId)
     })
 
     setImmediate(() => {

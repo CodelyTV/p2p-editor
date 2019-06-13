@@ -1,46 +1,80 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import rootReducer from './reducers'
 import AppComponent from './components/AppComponent'
-import Session from './session'
 import sessionIdFromUrl from './session-id-from-url'
 import Editor from './editor'
-import ChangeLog from './change-log'
-
+import {initializeSession, userConnected, userDisconnected} from './actions'
+import notifyPeers from "./middlewares/notifyPeers";
+import ReactiveSwarm from "./reactive-swarm";
 
 class P2PEditor {
 
   constructor() {
     this.sessionId = sessionIdFromUrl(window.location.toString())
     this.isFollower = this.sessionId != null
-    this.changeLog = new ChangeLog(this.sessionId)
+    this.reactiveSwarm = new ReactiveSwarm(this.sessionId)
     this.editor = new Editor(this.isFollower)
-    this.session = null
-
-    ReactDOM.render(<AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />, document.getElementById('app'))
+    this.store = null
 
     this.editor.on('editor.updated', (delta) => {
-      this.changeLog.append(delta)
+      this.reactiveSwarm.changeLog.append(delta)
     })
 
-    this.changeLog.on('change_log.loaded', (key) => {
-      this.session = new Session(key)
+    this.reactiveSwarm.on('ready', (key, myKey) => {
 
-      this.session.on('session.ready', (sessionId) => {
-        if (!this.isFollower) {
-          window.history.pushState(null, null, sessionId)
+      this.initializeSession(key, myKey)
+
+      this.reactiveSwarm.on('peer_connected', (peer) => {
+        this.store.dispatch(userConnected(peer.id))
+        peer.subscribe((action) => {
+          this.store.dispatch(action)
+        })
+      })
+
+      this.reactiveSwarm.on('peer_disconnected', (peer, peerId) => {
+        this.store.dispatch(userDisconnected(peerId));
+      })
+
+      this.reactiveSwarm.changeLog.on('change_log.changes_applied', (data) => {
+        if (this.isFollower) {
+          this.editor.applyDelta(data)
         }
       })
-
-      this.session.on('session.new_peer_appeared', (peer) => {
-        this.changeLog.replicate(peer, {live: true, encrypt: false})
-      })
     })
+  }
 
-    this.changeLog.on('change_log.changes_applied', (data) => {
-      if (this.isFollower) {
-        this.editor.applyDelta(data)
-      }
-    })
+  initializeSession(key, myKey) {
+    this.sessionId = key;
+
+    if (!this.isFollower) {
+      this.addSessionIdToUrl()
+    }
+
+    this.store = createStore(
+      rootReducer,
+      {users: []},
+      composeWithDevTools(
+        applyMiddleware(notifyPeers(this.reactiveSwarm.myLog))
+      )
+    )
+
+    this.store.dispatch(initializeSession(myKey, key, this.isFollower))
+    this.store.dispatch(userConnected(myKey))
+
+    ReactDOM.render(
+      <Provider store={this.store}>
+        <AppComponent sessionId={this.sessionId} isFollower={this.isFollower} />
+      </Provider>,
+      document.getElementById('app')
+    )
+  }
+
+  addSessionIdToUrl() {
+    window.history.pushState(null, null, this.sessionId)
   }
 }
 
