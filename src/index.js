@@ -10,6 +10,7 @@ import Editor from './editor'
 import {initializeSession, userConnected, userDisconnected} from './actions'
 import notifyPeers from "./middlewares/notifyPeers";
 import ReactiveSwarm from "./reactive-swarm";
+import './main.css';
 
 class P2PEditor {
 
