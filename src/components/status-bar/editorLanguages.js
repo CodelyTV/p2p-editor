@@ -1,0 +1,15 @@
+export default [
+  {id: 'javascript', name: 'JavaScript'},
+  {id: 'php', name: 'PHP'},
+  {id: 'java', name: 'Java'},
+  {id: 'scala', name: 'Scala'},
+  {id: 'sh', name: 'Shell'},
+  {id: 'markdown', name: 'Markdown'},
+  {id: 'kotlin', name: 'Kotlin'},
+  {id: 'c_cpp', name: 'C/C++'},
+  {id: 'csharp', name: 'C#'},
+  {id: 'golang', name: 'Go'},
+  {id: 'sql', name: 'SQL'},
+  {id: 'css', name: 'CSS'},
+  {id: 'html', name: 'HTML'},
+]
