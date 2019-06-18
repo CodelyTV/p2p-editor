@@ -189,6 +189,18 @@
   right: 0;
   height: 20px;
   z-index: 40;
+}
+
+.language-selector {
+  border: none;
+  color: #fff;
+  background: #151317;
   font-family: 'Roboto Mono', monospace;
-  font-weight: bold;
+  font-size: 11px;
+}
+
+.selected-language {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  padding: 0 8px;
 }

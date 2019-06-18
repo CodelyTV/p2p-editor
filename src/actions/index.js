@@ -34,3 +34,10 @@ export function setDisplayName(userId, displayName) {
     displayName: displayName
   }
 }
+
+export function selectEditorLanguage(languageId) {
+  return {
+    type: 'SELECT_EDITOR_LANGUAGE',
+    languageId
+  }
+}
