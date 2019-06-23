@@ -23,11 +23,11 @@ class ReactiveSwarm extends EventEmitter {
 
         this.session.on('session.new_peer_appeared', (peer, peerId) => {
 
-          var remoteLog = hypercore(ram, peerId, {valueEncoding: 'json'})
+          let remoteLog = hypercore(ram, peerId, {valueEncoding: 'json'})
           remoteLog.on('ready', () => {
-            var stream = this.changeLog.replicate(peer, {live: true, encrypt: false})
-            this.myLog.replicate({stream: stream})
-            remoteLog.replicate({stream: stream})
+            let stream = this.changeLog.replicate(peer, {live: true, encrypt: false})
+            this.myLog.replicate({stream: stream, live: true, encrypt: false})
+            remoteLog.replicate({stream: stream, live: true, encrypt: false})
             peer.pipe(stream).pipe(peer)
 
             const user = new Peer(peerId, remoteLog)
