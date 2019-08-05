@@ -6,6 +6,7 @@ import UserListComponent from './user-list/UserListComponent'
 import { setDisplayName, startSession } from '../actions'
 import MenuComponent from "./menu/MenuComponent";
 import MenuItemComponent from "./menu/MenuItemComponent";
+import StatusBarComponent from "./status-bar/StatusBarComponent";
 
 class AppComponent extends Component {
 
@@ -43,6 +44,7 @@ class AppComponent extends Component {
           active={userPanelActive}
           onCloseClicked={() => {this.closeUserPanel()}}
         />
+        <StatusBarComponent/>
       </div>
     )
   }

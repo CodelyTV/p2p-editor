@@ -22,7 +22,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 6;
+    z-index: 50;
     background: #202020;
     color: #fff;
 }
@@ -104,7 +104,7 @@
   top: 0;
   right: -226px;
   bottom: 0;
-  z-index: 5;
+  z-index: 30;
   margin: 0;
   padding: 0;
   width: 225px;
@@ -154,7 +154,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 5;
+  z-index: 10;
   margin: 0;
   padding: 0;
   width: 30px;
@@ -175,4 +175,32 @@
   white-space: nowrap;
   color: hsla(70, 3%, 83%, 1);
   cursor: pointer;
+}
+
+.status-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: #151317;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  z-index: 40;
+}
+
+.language-selector {
+  border: none;
+  color: #fff;
+  background: #151317;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+}
+
+.selected-language {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  padding: 0 8px;
 }

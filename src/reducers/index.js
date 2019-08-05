@@ -6,7 +6,8 @@ export default (state = {}, action) => {
         userId: action.userId,
         sessionId: action.sessionId,
         isSessionStarted: false,
-        isFollower: action.isFollower
+        isFollower: action.isFollower,
+        editorLanguageId: 'javascript'
       }
 
     case 'START_SESSION':
@@ -42,6 +43,13 @@ export default (state = {}, action) => {
       })
       return { ...state, users: updatedUsers }
     }
+
+    case 'SELECT_EDITOR_LANGUAGE':
+      return {
+        ...state,
+        editorLanguageId: action.languageId
+      }
+
     default:
       return state
   }
