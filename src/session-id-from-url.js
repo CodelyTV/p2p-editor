@@ -1,5 +1,7 @@
 function sessionIdFromUrl(url) {
-    return url.split('/')[3] || null
+  const path = url.split('/')[3]
+  const sessionId = path.split('?')[0]
+  return sessionId || null
 }
 
 export default sessionIdFromUrl
