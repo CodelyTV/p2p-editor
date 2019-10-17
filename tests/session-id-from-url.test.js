@@ -1,4 +1,4 @@
-sessionIdFromUrl = require('../src/session-id-from-url')
+import sessionIdFromUrl from '../src/session-id-from-url'
 
 test('it should extract session id from first argument of URL', () => {
     let url = 'http://domainname.tld/session-id-1'
@@ -9,6 +9,12 @@ test('it should extract session id from first argument of URL', () => {
 
     url = 'https://domainname.tld/session-id-3/another-argument'
     expect(sessionIdFromUrl(url)).toBe('session-id-3');
+});
+
+
+test('it should extract session id from first argument of URL when URL contain query strings', () => {
+    const url = 'https://domainname.tld/session-id-4/?param=one&other-param=two'
+    expect(sessionIdFromUrl(url)).toBe('session-id-4');
 });
 
 test('it should return null when session id is not in URL', () => {
