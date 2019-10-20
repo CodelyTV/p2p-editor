@@ -15,7 +15,7 @@ class Session extends EventEmitter {
       let options = {}
 
       if (!isFollower) {
-        const constraints = {audio: true, video: true}
+        const constraints = {audio: false, video: true}
         const stream = await navigator.mediaDevices.getUserMedia(constraints)
         const video = document.querySelector('video');
         video.muted = true;
@@ -25,7 +25,19 @@ class Session extends EventEmitter {
           offerConstraints: {
             mandatory: {
               OfferToReceiveAudio: true,
-              OfferToReceiveVideo: true
+              OfferToReceiveVideo: false
+            }
+          }
+        }
+      } else {
+        const constraints = {audio: true, video: false}
+        const stream = await navigator.mediaDevices.getUserMedia(constraints)
+        options = {
+          stream: stream,
+          offerConstraints: {
+            mandatory: {
+              OfferToReceiveAudio: true,
+              OfferToReceiveVideo: false
             }
           }
         }
@@ -42,8 +54,16 @@ class Session extends EventEmitter {
       sw.on('peer', (peer, peerId) => {
 
         peer.on('stream', (stream) => {
-          const video = document.querySelector('video');
-          video.srcObject = stream;
+          console.log('stream')
+          if (stream.getVideoTracks().length) {
+            const video = document.querySelector('video');
+            video.srcObject = stream;
+          } else {
+            const audio = document.createElement('audio')
+            audio.autoplay = true
+            document.body.appendChild(audio)
+            audio.srcObject = stream
+          }
         })
 
         self.emit('session.new_peer_appeared', peer, peerId)
