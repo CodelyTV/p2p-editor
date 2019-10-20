@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:10
 
 RUN npm install -g signalhub
 
