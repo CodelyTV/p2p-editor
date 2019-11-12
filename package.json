@@ -42,7 +42,7 @@
     "mini-css-extract-plugin": "^0.7.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react-dom": "^16.11.0",
     "url-loader": "^2.0.0",
     "webpack": "^4.28.2",
     "webpack-cli": "^3.1.2"
