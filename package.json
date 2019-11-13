@@ -45,7 +45,7 @@
     "react-dom": "^16.8.6",
     "url-loader": "^2.0.0",
     "webpack": "^4.28.2",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {
     "ace-builds": "^1.4.2",
