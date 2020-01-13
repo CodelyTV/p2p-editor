@@ -50,7 +50,7 @@
   "dependencies": {
     "ace-builds": "^1.4.2",
     "dotenv-webpack": "^1.7.0",
-    "hypercore": "^6.24.0",
+    "hypercore": "^8.4.1",
     "random-access-memory": "^3.1.1",
     "react-redux": "^7.0.3",
     "redux": "^4.0.1",
