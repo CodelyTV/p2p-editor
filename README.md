@@ -119,12 +119,12 @@ Workflow:
 
 ### 🌍 Application execution
 
-1. Start the application with Docker Compose: `docker-compose up`
+1. Start the application with Docker Compose: `docker compose up`
 2. Go to [http://localhost:3617](http://localhost:3617)
 
 ### ✅ Tests execution
 
-1. Execute Unit tests: `docker-compose run p2p-editor test`
+1. Execute Unit tests: `docker compose run p2p-editor test`
 
 ## 💻 Live demo
 
